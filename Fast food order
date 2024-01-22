@@ -1,0 +1,128 @@
+public static void main(String[] args) {
+        String businessName = "Sam's Fried Chicken";
+
+        System.out.println("Welcome to " + businessName);
+
+        double total = 0;
+        double payment = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+
+        List<String> orders = new ArrayList<>();
+
+        System.out.println("\nMenu");
+        System.out.println("1. Honey Glazed Fried Chicken: P110.00");
+        System.out.println("2. Sweet & Spicy Fried Chicken: P125.00");
+        System.out.println("3. Classic Fried Chicken: P99.00");
+
+        System.out.println("\nDrinks");
+        System.out.println("4. Iced Tea: P25.00");
+        System.out.println("5. Coke in can: P45.00");
+        System.out.println("6. Mineral water: P20.00");
+
+        System.out.println("\nChoose your order: (enter 0 to finish taking the order)");
+        int itemNumber;
+        int quantity = 0;
+        double itemCost = 0;
+
+        do {
+            try {
+                System.out.print("Item Number (1-6, 0 to finish): ");
+                String input = scanner.next();
+                itemNumber = Integer.parseInt(input);
+
+                if (itemNumber >= 1 && itemNumber <= 6) {
+                    System.out.print("How many will you order sir/ma'am?: ");
+                    quantity = scanner.nextInt();
+
+                    double itemPrice = getItemPrice(itemNumber);
+                    itemCost = itemPrice * quantity;
+                    total += itemCost;
+
+                    String order = getItemName(itemNumber) + "\t" + quantity + "\t" + itemCost;
+                    orders.add(order);
+                    System.out.println(order);
+                } else if (itemNumber != 0) {
+                    System.out.println("Invalid item number. Please enter a number between 1 to 6");
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.nextLine(); // Clear the input buffer
+                itemNumber = -1; // Set itemNumber to -1 to continue the loop
+            }
+        } while (itemNumber != 0);
+
+        System.out.println("\nSubtotal: P" + total);
+        do {
+        	System.out.print("Enter payment amount: P");
+        	try {
+        		payment = scanner.nextDouble();
+        		if (payment < total) {
+        			System.out.println("Insufficient payment. Please enter a valid amount.");
+        		}
+        	} catch (InputMismatchException e) {
+        		System.out.println("Invalid input. Please enter a valid number.");
+        		scanner.nextLine();
+        		payment = -1;
+        	}
+        } while (payment < total);
+
+        double change = payment - total;
+
+        System.out.println("\nReceipt for " + customerName + " from " + businessName);
+        System.out.println("-------------------------------------");
+        System.out.println("Item\t\tQty\t\tCost");
+        System.out.println("-------------------------------------");
+
+        System.out.println("Total: P" + total);
+        System.out.println("Payment: P" + payment);
+        System.out.println("Change: P" + change);
+
+        System.out.println("\nOrders:");
+        for (String order : orders) {
+            System.out.println(order);
+        }
+    }
+
+    private static double getItemPrice(int itemNumber) {
+        switch (itemNumber) {
+            case 1:
+                return 110.00;
+            case 2:
+                return 125.00;
+            case 3:
+                return 99.00;
+            case 4:
+                return 25.00;
+            case 5:
+                return 45.00;
+            case 6:
+                return 20.00;
+            default:
+                return 0.00;
+        }
+    }
+
+    private static String getItemName(int itemNumber) {
+        switch (itemNumber) {
+            case 1:
+                return "Honey Glazed Fried Chicken";
+            case 2:
+                return "Sweet and Spicy Fried Chicken";
+            case 3:
+                return "Classic Fried Chicken";
+            case 4:
+                return "Iced Tea";
+            case 5:
+                return "Coke in can";
+            case 6:
+                return "Mineral Water";
+            default:
+                return "";
+        }
+    }
+}
+
