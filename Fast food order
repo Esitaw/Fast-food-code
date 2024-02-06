@@ -1,4 +1,13 @@
-public static void main(String[] args) {
+package sam;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+
+public class Activitynew {
+
+	public static void main(String[] args) {
         String businessName = "Sam's Fried Chicken";
 
         System.out.println("Welcome to " + businessName);
